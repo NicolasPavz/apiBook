@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "user")
-public class userEntity {
+public class UserEntity {
     @Id
     private String email;
     @Column(name = "last_name")

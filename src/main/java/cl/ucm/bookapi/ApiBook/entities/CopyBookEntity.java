@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 
 @Table(name="copy_book")
-public class copyBookEntity {
+public class CopyBookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_copybook")
@@ -20,5 +20,5 @@ public class copyBookEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_fk", referencedColumnName = "book_id", insertable = false, updatable = false)
-    private bookEntity book;
+    private BookEntity book;
 }

@@ -4,23 +4,29 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
-@Table(name = "fine")
+@Table(name = "booking")
 
-public class fineEntity {
+public class BookingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_fine")
+    @Column(name = "id_booking")
     private int id;
-    private int amount;
-    private String description;
+    @Column(name = "copybook_fk")
+    private int copybookFk;
+    @Column(name = "date_booking")
+    private LocalDateTime dateBooking;
+    @Column(name = "date_return")
+    private LocalDateTime dateReturn;
     private boolean state;
     @Column(name = "user_fk")
     private String userFk;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_fk", referencedColumnName = "email", insertable = false, updatable = false)
-    private userEntity user;
+    private UserEntity user;
 }

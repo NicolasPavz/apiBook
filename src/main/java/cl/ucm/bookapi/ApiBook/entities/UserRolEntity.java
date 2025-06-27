@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "user_rol")
-public class userRolEntity {
+public class UserRolEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol_user")
@@ -20,9 +20,9 @@ public class userRolEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rol_fk", referencedColumnName = "id_rol", insertable = false, updatable = false)
-    private rolEntity rol;
+    private RolEntity rol;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_fk", referencedColumnName = "email", insertable = false, updatable = false)
-    private userEntity user;
+    private UserEntity user;
 }
