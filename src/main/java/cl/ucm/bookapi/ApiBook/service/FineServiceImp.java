@@ -3,10 +3,12 @@ package cl.ucm.bookapi.ApiBook.service;
 import cl.ucm.bookapi.ApiBook.entities.FineEntity;
 import cl.ucm.bookapi.ApiBook.repository.FineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class FineServiceImp implements FineService{
     @Autowired
     private FineRepository repository;

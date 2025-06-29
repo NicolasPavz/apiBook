@@ -17,7 +17,7 @@ public class BookingEntity {
     @Column(name = "id_booking")
     private int id;
     @Column(name = "copybook_fk")
-    private int copybookFk;
+    private int copyBookFk;
     @Column(name = "date_booking")
     private LocalDateTime dateBooking;
     @Column(name = "date_return")
