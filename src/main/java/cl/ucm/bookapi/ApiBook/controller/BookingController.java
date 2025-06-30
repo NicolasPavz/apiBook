@@ -5,12 +5,11 @@ import cl.ucm.bookapi.ApiBook.entities.CopyBookEntity;
 import cl.ucm.bookapi.ApiBook.entities.UserEntity;
 import cl.ucm.bookapi.ApiBook.service.BookingService;
 import cl.ucm.bookapi.ApiBook.service.CopyBookService;
-import cl.ucm.bookapi.ApiBook.service.UserService;
+import cl.ucm.bookapi.ApiBook.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +26,13 @@ public class BookingController {
     private CopyBookService copyBookService;
 
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
 
     // Registrar prestamo de una copuia
     @PostMapping("/new")
     public ResponseEntity<?> createBooking(@RequestBody BookingEntity booking) {
         // se valida el usuario
-        Optional<UserEntity> optUser = userService.findByEmail(booking.getUserFk());
+        Optional<UserEntity> optUser = accountService.findByEmail(booking.getUserFk());
         if (optUser.isEmpty()) {
             return ResponseEntity.badRequest().body("El usuario no existe");
         }
