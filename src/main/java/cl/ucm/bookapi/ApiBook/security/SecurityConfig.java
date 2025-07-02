@@ -30,8 +30,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(config -> config.configurationSource(corsConfigurationSource))//.cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/auth/**").permitAll()
-//  .requestMatchers( "/category/**").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/book/all/**").permitAll()
                                 .requestMatchers("/api/book/**").hasRole("ADMIN")

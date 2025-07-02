@@ -62,7 +62,7 @@ public class AuthController {
         Optional<RegisterDto> optional = service.createUser(dto);
 
         if(optional.isPresent()){
-            ResponseEntity.ok("Usuario registrado correctamente");
+            return ResponseEntity.ok("Usuario registrado correctamente");
         }
         return ResponseEntity.notFound().build();
     }
