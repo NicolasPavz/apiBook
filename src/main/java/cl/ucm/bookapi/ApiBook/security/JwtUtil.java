@@ -15,6 +15,7 @@ public class JwtUtil {
     private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY);
 
     public String create(String username, String rol) {
+        System.out.println("role: " + rol);
         return JWT.create()
                 .withSubject(username + "#" + rol)
                 .withIssuer("biblioteca-ucm")

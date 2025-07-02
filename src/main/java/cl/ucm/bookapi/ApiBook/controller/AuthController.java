@@ -3,11 +3,16 @@ package cl.ucm.bookapi.ApiBook.controller;
 
 import cl.ucm.bookapi.ApiBook.dto.in.LoginDto;
 import cl.ucm.bookapi.ApiBook.dto.in.RegisterDto;
+import cl.ucm.bookapi.ApiBook.entities.RolEntity;
 import cl.ucm.bookapi.ApiBook.entities.UserEntity;
+import cl.ucm.bookapi.ApiBook.entities.UserRolEntity;
 import cl.ucm.bookapi.ApiBook.security.JwtUtil;
 import cl.ucm.bookapi.ApiBook.service.AccountService;
+import cl.ucm.bookapi.ApiBook.service.RolService;
+import cl.ucm.bookapi.ApiBook.service.UserRolService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,6 +43,10 @@ public class AuthController {
     private JwtUtil jwtUtil;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRolService userRolService;
+    @Autowired
+    private RolService rolService;
 
     //REgistrar usuario
     @PostMapping(path = "/register")
@@ -59,13 +69,26 @@ public class AuthController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@RequestBody LoginDto dto){
+        List<UserRolEntity> userRol = userRolService.findByUserFk(dto.getEmail());
+
+        if (userRol.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario sin roles");
+        }
+
+        Integer rolId = userRol.get(0).getRolFk();
+        Optional<RolEntity> rolUser = rolService.findById(rolId);
+        if (rolUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rol no encontrado");
+        }
         UsernamePasswordAuthenticationToken login = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(login);
         log.info("Auth principal: {}", authentication.getPrincipal());
         log.info("Authorities: {}", authentication.getAuthorities().stream().toList().toString());
-        String jwt = jwtUtil.create(dto.getEmail(),dto.getPassword());
+        String jwt = jwtUtil.create(dto.getEmail(),rolUser.get().getName());
         Map<String,String> map = new HashMap<>();
         map.put("token", jwt);
+        map.put("rol", rolUser.get().getName());
         return ResponseEntity.ok(map);
     }
 
