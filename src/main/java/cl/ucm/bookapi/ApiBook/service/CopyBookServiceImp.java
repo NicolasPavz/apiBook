@@ -16,6 +16,7 @@ public class CopyBookServiceImp implements CopyBookService{
 
     @Override
     public CopyBookEntity save(CopyBookEntity copyBook) {
+        copyBook.setState(true);
         return repository.save(copyBook);
     }
 
