@@ -78,9 +78,9 @@ public class AccountServiceImp implements AccountService {
         repository.save(user);
 
         // verifico si existe el rol LECTOR
-
-        RolEntity lectorRol = rolService.findByName("LECTOR").orElseThrow(
-                () -> new RuntimeException("Rol LECTOR no encontrado")
+        String rolName = dto.getRol();
+        RolEntity lectorRol = rolService.findByName(rolName).orElseThrow(
+                () -> new RuntimeException("Rol+" + rolName +"no encontrado")
         );
 
         // Creo un nuevo user rol e ingreso el id de usuario e id del rol

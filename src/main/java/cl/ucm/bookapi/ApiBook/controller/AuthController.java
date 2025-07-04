@@ -58,7 +58,14 @@ public class AuthController {
         if (existingUser.isPresent()){
             return ResponseEntity.badRequest().body("Ya existe un usuario con ese email");
         }
-
+        if (dto.getRol().isBlank()){
+            Optional<RolEntity> lectorRol = rolService.findByName("LECTOR");
+            if (lectorRol.isEmpty()){
+                return ResponseEntity.notFound().build();
+            }else{
+                dto.setRol("LECTOR");
+            }
+        }
         Optional<RegisterDto> optional = service.createUser(dto);
 
         if(optional.isPresent()){

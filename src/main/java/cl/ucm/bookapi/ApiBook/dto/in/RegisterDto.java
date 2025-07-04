@@ -10,4 +10,5 @@ public class RegisterDto {
     private String name;
     private String lastName;
     private String password;
+    private String rol = "";
 }
