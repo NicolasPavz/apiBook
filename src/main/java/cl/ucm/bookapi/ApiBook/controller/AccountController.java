@@ -1,5 +1,6 @@
 package cl.ucm.bookapi.ApiBook.controller;
 
+import cl.ucm.bookapi.ApiBook.dto.in.StateDto;
 import cl.ucm.bookapi.ApiBook.entities.UserEntity;
 import cl.ucm.bookapi.ApiBook.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class AccountController {
 
     // cambiar estado de usuario
     @PostMapping("/state/{email}")
-    public ResponseEntity<?> updateUserState(@PathVariable String email, @RequestBody boolean newState) {
-        Optional<UserEntity> optional = accountService.updateState(email, newState);
+    public ResponseEntity<?> updateUserState(@PathVariable String email, @RequestBody StateDto dto) {
+        Optional<UserEntity> optional = accountService.updateState(email, dto.isState());
         if (optional.isPresent()) {
             return ResponseEntity.ok(optional.get());
         }

@@ -29,4 +29,8 @@ public class BookingEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_fk", referencedColumnName = "email", insertable = false, updatable = false)
     private UserEntity user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "copybook_fk", referencedColumnName = "id_copybook", insertable = false, updatable = false)
+    private CopyBookEntity copyBook;
 }
