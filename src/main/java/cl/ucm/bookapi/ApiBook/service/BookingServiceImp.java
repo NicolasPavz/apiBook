@@ -17,6 +17,7 @@ public class BookingServiceImp implements BookingService{
 
     @Override
     public BookingEntity save(BookingEntity booking) {
+        booking.setState(true);
         return repository.save(booking);
     }
 
